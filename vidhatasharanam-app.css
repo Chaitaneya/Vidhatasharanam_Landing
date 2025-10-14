@@ -92,7 +92,7 @@ body{
 /* HERO – FULL WIDTH BACKGROUND FIX */
 .hero-section.with-bg{
   position:relative;
-  background:url('./src/background.jpg') center/cover no-repeat;
+  background:url('./background.jpg') center/cover no-repeat;
   min-height:75vh;
   display:flex;
   align-items:center;
@@ -653,4 +653,5 @@ body{
   .enquiry-contact-item {
     padding: 12px;
   }
+
 }
