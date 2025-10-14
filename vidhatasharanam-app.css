@@ -10,6 +10,8 @@ body{
   font-family:var(--font); color:var(--black); background:var(--white);
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   line-height:1.4;
+  /* FIX 1: Prevent overall side breakage */
+  overflow-x: hidden;
 }
 
 /* PRELOADER (compact) */
@@ -570,12 +572,23 @@ body{
   .stats-row {
     flex-direction: row;
     justify-content: space-around;
+    /* FIX 2A: Make row children flexible to prevent overflow */
+    width: 100%;
+    gap: 10px; /* Reduced gap */
+    padding: 12px; /* Adjusted padding */
+  }
+
+  /* FIX 2B: Make individual stats flexible and reduce padding */
+  .stats-column .stats-row > .stat {
+    flex: 1; 
+    min-width: 0;
+    padding: 12px 5px; 
+    font-size: 24px; /* Slightly smaller font to fit 3 columns */
   }
   
   .stat {
     border-bottom: none;
     border-right: 1px solid rgba(0,0,0,0.05);
-    padding: 12px 20px;
   }
   
   .stat:last-child {
@@ -593,7 +606,7 @@ body{
   }
   
   .hero-right{width:100%;order:1}
-  .hero-left{order:2;text-align:center}
+  .hero-left{order:2;text-align:center; max-width: 100%; flex: 1; } /* FIX 3: Ensure hero-left takes full mobile width */
   
   .property-types-grid.compact-grid{grid-template-columns:repeat(2,1fr)}
   
@@ -628,7 +641,14 @@ body{
   .hero-right{display:none}
   
   .stats-row {
-    flex-direction: column;
+    flex-direction: column; /* Correctly stack on small phones */
+    padding: 24px; /* Restore desktop padding for full width item */
+  }
+  
+  .stats-column .stats-row > .stat {
+    flex: none; /* Remove flex 1 when stacking vertically */
+    padding: 12px 0; /* Full width padding restored */
+    font-size: 32px; /* Restore original font size */
   }
   
   .stat {
