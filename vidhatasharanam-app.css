@@ -226,7 +226,7 @@ body{
 
 .stat{
   font-weight:800;
-  font-size:32px;
+  font-size:24px; /* FIX: Reduced from 32px to 24px for smaller desktop resolution readability */
   text-align:left;
   color: var(--orange);
   display: flex;
@@ -570,14 +570,13 @@ body{
     position: static;
   }
   
-  /* FIX 1: Enforce single column for project cards immediately below desktop width */
+  /* FIX: Enforce single column for project cards immediately below desktop width */
   .projects-grid {
     grid-template-columns: 1fr; 
   }
   
-  /* FIX 2: Force stats to stack vertically earlier on tablet/mobile to prevent overflow */
+  /* Stats row remains flex-direction: column (as defined on desktop) and flows vertically */
   .stats-row {
-    flex-direction: column; 
     justify-content: flex-start;
   }
   
