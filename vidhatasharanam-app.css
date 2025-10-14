@@ -7,11 +7,12 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{
+  /* FIX: Prevents horizontal scrolling/breaking on mobile devices */
+  overflow-x: hidden;
+  
   font-family:var(--font); color:var(--black); background:var(--white);
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   line-height:1.4;
-  /* FIX 1: Prevent overall side breakage */
-  overflow-x: hidden;
 }
 
 /* PRELOADER (compact) */
@@ -569,30 +570,26 @@ body{
     position: static;
   }
   
-  .stats-row {
-    flex-direction: row;
-    justify-content: space-around;
-    /* FIX 2A: Make row children flexible to prevent overflow */
-    width: 100%;
-    gap: 10px; /* Reduced gap */
-    padding: 12px; /* Adjusted padding */
+  /* FIX 1: Enforce single column for project cards immediately below desktop width */
+  .projects-grid {
+    grid-template-columns: 1fr; 
   }
-
-  /* FIX 2B: Make individual stats flexible and reduce padding */
-  .stats-column .stats-row > .stat {
-    flex: 1; 
-    min-width: 0;
-    padding: 12px 5px; 
-    font-size: 24px; /* Slightly smaller font to fit 3 columns */
+  
+  /* FIX 2: Force stats to stack vertically earlier on tablet/mobile to prevent overflow */
+  .stats-row {
+    flex-direction: column; 
+    justify-content: flex-start;
   }
   
   .stat {
-    border-bottom: none;
-    border-right: 1px solid rgba(0,0,0,0.05);
+    border-right: none;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 12px 0;
+    text-align: left;
   }
   
   .stat:last-child {
-    border-right: none;
+    border-bottom: none;
   }
 }
 
@@ -606,13 +603,12 @@ body{
   }
   
   .hero-right{width:100%;order:1}
-  .hero-left{order:2;text-align:center; max-width: 100%; flex: 1; } /* FIX 3: Ensure hero-left takes full mobile width */
+  .hero-left{order:2;text-align:center}
   
+  /* Only switch the small feature grid to 2 columns here */
   .property-types-grid.compact-grid{grid-template-columns:repeat(2,1fr)}
   
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
+  /* .projects-grid is already 1fr from 1024px, no change needed here */
   
   .footer-inner{
     grid-template-columns: 1fr;
@@ -636,29 +632,10 @@ body{
 }
 
 @media (max-width:500px){
+  /* Switch small feature grid to single column on small phones */
   .property-types-grid.compact-grid{grid-template-columns:1fr}
   .headline{font-size:22px}
   .hero-right{display:none}
-  
-  .stats-row {
-    flex-direction: column; /* Correctly stack on small phones */
-    padding: 24px; /* Restore desktop padding for full width item */
-  }
-  
-  .stats-column .stats-row > .stat {
-    flex: none; /* Remove flex 1 when stacking vertically */
-    padding: 12px 0; /* Full width padding restored */
-    font-size: 32px; /* Restore original font size */
-  }
-  
-  .stat {
-    border-right: none;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-  }
-  
-  .stat:last-child {
-    border-bottom: none;
-  }
   
   /* Mobile responsiveness for popup */
   .enquiry-popup-content {
